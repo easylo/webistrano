@@ -44,15 +44,20 @@ class User < ActiveRecord::Base
 
 	def self.ldap_users
 
-		auth = { :method =>  WebistranoConfig[:ldap_method], :username =>  WebistranoConfig[:ldap_username], :password =>  WebistranoConfig[:ldap_password] }
+		if WebistranoConfig[:ldap_enable]  then
 
-		ldap = Net::LDAP.new  :host => WebistranoConfig[:ldap_host], :port => WebistranoConfig[:ldap_port], :base => WebistranoConfig[:ldap_base], :auth => auth
+			auth = { :method =>  WebistranoConfig[:ldap_method], :username =>  WebistranoConfig[:ldap_username], :password =>  WebistranoConfig[:ldap_password] }
 
-		filter = Net::LDAP::Filter.eq(WebistranoConfig[:ldap_filter_attr], WebistranoConfig[:ldap_filter_value] )
+			ldap = Net::LDAP.new  :host => WebistranoConfig[:ldap_host], :port => WebistranoConfig[:ldap_port], :base => WebistranoConfig[:ldap_base], :auth => auth
 
-		entries = ldap.search(:filter => filter)
+			filter = Net::LDAP::Filter.eq(WebistranoConfig[:ldap_filter_attr], WebistranoConfig[:ldap_filter_value] )
 
-		entries.delete_if{|u| u[:cn] == [] || u[:mail] == []}
+			entries = ldap.search(:filter => filter)
+
+			entries.delete_if{|u| u[:cn] == [] || u[:mail] == []}
+    		else
+      			entries = Array.new 
+		end
 
 		return entries
 
@@ -76,7 +81,7 @@ class User < ActiveRecord::Base
 
 		if self.login.blank?
 
-			self.login = User.ldap_email(self.ldap_cn)
+			self.login = self.ldap_cn
 
 			self.email = User.ldap_email(self.ldap_cn)
 

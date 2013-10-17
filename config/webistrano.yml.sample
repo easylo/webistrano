@@ -2,6 +2,7 @@
 # :authentication_method: cas
 
 # ldap configuration 
+:ldap_enable: false
 :ldap_host: ""
 :ldap_port: 389
 :ldap_base: "ou=people,dc=example,dc=com"
