@@ -12,9 +12,10 @@ gem "open4"
 gem "version_fu"
 gem "exception_notification", "2.3.3.0"
 gem "thin"
-gem 'capistrano_rsync_with_remote_cache', :git => 'git://github.com/jverdeyen/capistrano_rsync_with_remote_cache.git'
+gem 'capistrano_rsync_with_remote_cache'
 gem "colored"
 gem "unicorn"
+gem "net-ldap"
 
 group :test do
   gem "mocha", "0.9.8"

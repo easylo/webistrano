@@ -1,4 +1,41 @@
 <% flashed_errors(:user) %>
+
+<script language=javascript type='text/javascript'>
+function ldap_toggel() {
+	toggel_element(document.getElementById('ldap_user'));
+	toggel_element(document.getElementById('normal_user'));
+	if (document.getElementById('normal_user').style.display == 'none'){
+		document.getElementById('user_login').value = '';
+		document.getElementById('user_email').value = '';
+		document.getElementById('user_password').value = '';
+		document.getElementById('user_password_confirmation').value = '';
+	}
+};
+function toggel_element(e){
+
+
+	if(e.style.display == 'none'){
+		e.style.display = 'block';
+	}else{
+		e.style.display = 'none';
+	}
+	
+
+} ;
+</script>
+<p>
+  
+  <input type=checkbox name="ldap" onclick='ldap_toggel()' <%="#{(@user.ldap_cn.blank?)?'':'checked'}"%>><b>LDAP?</b> 
+  
+</p>
+<div id="ldap_user" style=<%="#{(@user.ldap_cn.blank?)?'display:none':'display:block'}"%>>
+<p>
+  <b>LDAP User</b><br />
+  <%=select 'user', 'ldap_cn', User.ldap_users.collect{|u| [u[:cn].to_s, u[:cn].to_s]}.sort%>
+</p>
+</div>
+<div id="normal_user" style=<%="#{(@user.ldap_cn.blank?)?'display:block':'display:none'}"%>>
+
 <p>
   <b>Login</b><br />
   <%= text_field 'user', 'login', :style =>'width:330px;' %>
@@ -20,6 +57,7 @@
   <%= password_field 'user', 'password_confirmation', :style =>'width:330px;' %>
 </p>
 <% end -%>
+</div>
 
 <p>
   <b>Timezone</b><br />

@@ -18,6 +18,8 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+@user.normalize
+
     if current_user.admin?
       @user.admin = params[:user][:admin].to_i rescue 0
     end
@@ -50,6 +52,15 @@ class UsersController < ApplicationController
   # GET /users/edit/1
   def edit
     @user = User.find(params[:id])
+
+	if !@user.ldap_cn.blank?
+
+    		@user.login = nil
+
+    		@user.email = nil
+
+	end
+
   end
   
   # PUT /users/1
@@ -57,6 +68,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.attributes = params[:user]
+@user.normalize
+
     
     if current_user.admin?
       @user.admin = params[:user][:admin].to_i rescue 0

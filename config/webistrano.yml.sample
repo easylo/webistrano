@@ -1,6 +1,17 @@
 # Uncomment to use CAS authentication
 # :authentication_method: cas
 
+# ldap configuration 
+:ldap_host: ""
+:ldap_port: 389
+:ldap_base: "ou=people,dc=example,dc=com"
+:ldap_method: :simple #either :simple or :anonymous. If you choose :anonymous then you can keep username/password empty ''
+:ldap_username: 'cn=admin,dc=exampl,dc=com'
+:ldap_password: 'password'
+:ldap_filter_attr: 'objectclass' #any ldap entry attribute
+:ldap_filter_value: 'person'#the value of the attribute to be filtered on
+
+
 # SMTP settings for outgoing email
 :smtp_delivery_method: :smtp
 
