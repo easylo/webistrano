@@ -1,0 +1,46 @@
+WebistranoLdapUsers
+====================
+
+webistrano_ldap_users is a simple Rails plugin sposored by PopCap Games.  webistrano_ldap_users gives admins of Webistrano-1.5 the ability of adding users via LDAP server or by normal username/password. After applying the plugin to your working webistrano project copy, and running two shell commands, webistrano's add new user form will give admins the option of adding normal users (via username/password) or by selecting from a list of ldap users in an ldap server defined in webistrano.config.
+
+What the plugin basically does is:
+- it generates a migration for adding ldap field to the user model.
+- it replaces user add and edit views to present the added functionality.
+- it introduces some logic to list ldap users and ldap authentication. 
+
+
+After installing the plugin:
+============================
+- You need to have net-ldap gem installed. If it is not installed run the follwoing command:
+	>> gem install net-ldap
+or
+	>> sudo gem install net-ldap
+
+- run the generate command, accept whenever prompted for overwriting existing files:
+
+	>> ruby script/generate ldap_users_extensions
+	
+- migrate
+
+	>> rake db:migrate RAILS_ENV=production
+
+-LDAP configuration
+
+	>>vi config/webistrano_config.rb
+
+and set the follwing 8 parameters by your LDAP server corresponding values:
+
+	  :ldap_host => "192.168.0.5",
+	  :ldap_port => 389,
+	  :ldap_base => "ou=people,dc=example,dc=com",
+	  :ldap_method => :simple, #either :simple or :anonymous. If you choose :anonymous then you can keep username/password empty ''
+	  :ldap_username =>'cn=admin,dc=exampl,dc=com' ,
+	  :ldap_password =>'password',
+	  :ldap_filter_attr => 'objectclass', #any ldap entry attribute
+	  :ldap_filter_value => 'person', #the value of the attribute to be filtered on 
+
+
+
+
+
+===========================================================================
