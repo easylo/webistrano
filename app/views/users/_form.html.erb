@@ -31,7 +31,7 @@ function toggel_element(e){
 <div id="ldap_user" style=<%="#{(@user.ldap_cn.blank?)?'display:none':'display:block'}"%>>
 <p>
   <b>LDAP User</b><br />
-  <%=select 'user', 'ldap_cn', User.ldap_users.collect{|u| [u[:cn].to_s, u[:cn].to_s]}.sort%>
+  <%=select 'user', 'ldap_cn', User.ldap_users.collect{|u| [u[:cn].first.to_s, u[:cn].first.to_s]}.sort%>
 </p>
 </div>
 <div id="normal_user" style=<%="#{(@user.ldap_cn.blank?)?'display:block':'display:none'}"%>>
