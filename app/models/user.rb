@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
 
 		ldap_entry = ldap.search(:filter => filter).first
 
-		return ldap_entry[:mail].to_s
+		return ldap_entry[:mail].first.to_s
 
 	end
 
