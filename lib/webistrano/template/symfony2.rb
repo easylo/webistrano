@@ -261,8 +261,8 @@ module Webistrano
         before "deploy:update_code" do
           msg = "--> Updating code base with #{deploy_via} strategy"
           logger.info msg
-          sudo "mkdir -p #{local_cache_path}"
-          sudo "chown -R #{user} #{local_cache_path}"
+          #{try_sudo} "mkdir -p #{local_cache_path}"
+          #{try_sudo} "chown -R #{user} #{local_cache_path}"
         end
 
         after "deploy:create_symlink" do
