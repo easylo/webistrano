@@ -1,5 +1,6 @@
 class HostsController < ApplicationController
   before_filter :ensure_admin, :only => [:new, :edit, :destroy, :create, :update]
+  before_filter :ensure_user, :only => [:show]
 
   # GET /hosts
   # GET /hosts.xml
@@ -80,4 +81,15 @@ class HostsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+   def ensure_user
+    if current_user.admin? 
+      #|| self.current_user.projects.include?(Host.find(params[:id]))
+      true
+    else
+      flash[:notice] = "Action not allowed (not user)"
+      false
+    end
+  end
+
 end

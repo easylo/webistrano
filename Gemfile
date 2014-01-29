@@ -15,7 +15,7 @@ gem "thin"
 gem 'capistrano_rsync_with_remote_cache'
 gem "colored"
 gem "unicorn"
-gem "net-ldap", :git => "http://github.com/ruby-ldap/ruby-net-ldap.git", :branch => "master"
+gem "net-ldap"
 
 group :test do
   gem "mocha", "0.9.8"

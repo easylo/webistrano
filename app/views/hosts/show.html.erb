@@ -35,6 +35,18 @@
 <div class="clear"></div>
 <br>
 
+<% if current_user.admin? %>
+<br>
+<fieldset class="fieldset">
+  <legend>Host configuration</legend>
+  <%= render(:partial => 'configs') %>
+  <br />
+  <%= link_to 'New configuration', new_host_host_configuration_path(@host), :class => 'arrow_link' %>
+</fieldset>
+<br /><br />
+<% end %>
+
+
 <fieldset class="fieldset">
   <legend>Stages</legend>
   <%= render(:partial => 'stages')%>

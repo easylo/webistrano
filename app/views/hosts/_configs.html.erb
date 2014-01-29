@@ -1,0 +1,25 @@
+<% if @host.configuration_parameters.empty? %>
+  <br/>
+    <strong>No host wide configuration added yet.</strong><br/>
+     Host configuration is overridden by stage configurations.
+  </p>
+<% else %>
+  <table class="sortable">
+    <tr>
+      <th width="1%">Name</th>
+      <th width="98%">Value</th>
+      <th width="1%">Prompt?</th>
+    </tr>
+  <% for config in @host.configuration_parameters %>
+    <tr class="<%= cycle :even, :odd, :name => 'configs' %>">
+      <td title="<%=h config.name %>"><%= truncate(h(config.name), :length => 25) %></td>
+      <td title="<%=h config.value %>"><%=h truncate(hide_password_in_value(config), :length => 45) %></td>
+      <td><%= config.prompt_status_in_html %></td>
+    <% if current_user.admin? %>
+      <td><%= link_to 'Edit', edit_host_host_configuration_path(@host, config) %></td>
+      <td><%= link_to 'Delete', host_host_configuration_path(@host, config), :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+  </table>
+<% end %>

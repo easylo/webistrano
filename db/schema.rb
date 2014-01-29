@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20131017211742) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "prompt_on_deploy", :default => 0
+    t.integer  "host_id"
+    t.string   "description",      :default => ""
   end
 
   create_table "deployments", :force => true do |t|
@@ -46,6 +48,9 @@ ActiveRecord::Schema.define(:version => 20131017211742) do
   end
 
   add_index "deployments_roles", ["deployment_id", "role_id"], :name => "index_deployments_roles_on_deployment_id_and_role_id", :unique => true
+
+  create_table "host_configurations", :force => true do |t|
+  end
 
   create_table "hosts", :force => true do |t|
     t.string   "name"

@@ -1,0 +1,26 @@
+<% form_for(:configuration, :url => host_host_configurations_path(current_host)) do |f| %>
+
+  <%= render(:partial => 'form')%>
+  <br/>
+
+  <%= link_to 'Back to host', host_path(current_host), :class => 'arrow_link ontheright', :style => 'margin-right: 330px' %>
+
+  <p>
+    <%= submit_tag "Create" %>
+  </p>
+  
+<% end %>
+
+<% content_for(:breadcrumb) do %>
+  <% breadcrumb_box do %>
+    <%= link_to "Back to host", host_path(current_host), :style => "float:right", :class => "arrow_link" %>
+    <%= link_to "host", hosts_path %> &gt; 
+    Project <%= link_to current_host.name, host_path(current_host) %> &gt; 
+    New
+  <% end %>
+<% end %>
+
+<% content_for(:page_title) do %>
+  <% @page_title = "New configuration" %>
+  <h2>New configuration</h2>
+<% end %>

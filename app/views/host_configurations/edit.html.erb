@@ -1,0 +1,26 @@
+<% form_for(:configuration, :url => host_host_configuration_path(@host, @configuration), :html => { :method => :put }) do |f| %>
+
+  <%= render(:partial => 'form')%>
+  <br/>
+
+  <%= link_to 'Back to host', host_path(current_host), :class => 'arrow_link ontheright', :style => 'margin-right: 330px' %>
+
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+
+<% end %>
+
+<% content_for(:breadcrumb) do %>
+  <% breadcrumb_box do %>
+    <%= link_to "Back to host", host_path(current_host), :style => "float:right", :class => "arrow_link" %>
+    <%= link_to "Hosts", hosts_path %> &gt; 
+    host <%= link_to current_host.name, host_path(current_host) %> &gt; 
+    Edit
+  <% end %>
+<% end %>
+
+<% content_for(:page_title) do %>
+  <% @page_title = "Edit configuration" %>
+  <h2>Edit configuration</h2>
+<% end %>

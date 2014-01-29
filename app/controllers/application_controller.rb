@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   layout 'application'
 
   helper :all # include all helpers, all the time
-  helper_method :current_stage, :current_project
+  helper_method :current_stage, :current_project, :current_host
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
     @project = Project.find(params[:project_id])
   end
 
+   def load_host
+    @host = Host.find(params[:host_id])
+  end
+
   def load_stage
     load_project
     @stage = @project.stages.find(params[:stage_id])
@@ -39,6 +43,10 @@ class ApplicationController < ActionController::Base
 
   def current_project
     @project
+  end
+
+  def current_host
+    @host
   end
 
   def ensure_admin

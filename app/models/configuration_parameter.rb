@@ -1,5 +1,5 @@
 class ConfigurationParameter < ActiveRecord::Base
-  attr_accessible :name, :value, :prompt_on_deploy
+  attr_accessible :name, :value, :prompt_on_deploy, :description
   
   validates_presence_of :name
   validates_inclusion_of :prompt_on_deploy, :in => 0..1

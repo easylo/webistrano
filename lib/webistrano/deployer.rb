@@ -118,16 +118,26 @@ module Webistrano
       set_pre_vars(config)
       load_recipes(config)
 
+      set_host_configuration(config)
+
       set_project_and_stage_names(config)
+      
       set_stage_configuration(config)
+
+      
+
       set_stage_roles(config)
+      
 
       load_project_template_tasks(config)
       load_stage_custom_recipes(config)
 
       if deployment.stage.project.template == "Symfony2"
         set_stage_configuration(config)
+        set_host_configuration(config)
       end
+
+      
 
       config
     end
@@ -136,6 +146,26 @@ module Webistrano
     # so that it gets used by the SCM#logger
     def set_webistrano_logger(config)
       config.set :logger, logger
+    end
+
+    # sets the host configuration on the Capistrano configuration
+    def set_host_configuration(config)
+      #self.hosts.configuration_parameters.dup
+      #host_configs = 
+      deployment.stage.hosts.each do |host|
+      host_configs = host.configuration_parameters.dup
+    
+        host_configs.each do |effective_conf|
+          value = resolve_references(config, effective_conf.value)
+          config.set effective_conf.name.to_sym, Deployer.type_cast(value)
+          config
+          #set effective_conf.name.to_sym, Deployer.type_cast(value)
+        end
+      end
+      #deployment.host.prompt_config.each do |k, v|
+      #  v = resolve_references(config, v)
+      #  config.set k.to_sym, Deployer.type_cast(v)
+      #end
     end
 
     # sets the stage configuration on the Capistrano configuration

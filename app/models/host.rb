@@ -1,14 +1,21 @@
 class Host < ActiveRecord::Base
   has_many :roles, :dependent => :destroy, :uniq => true
   has_many :stages, :through => :roles, :uniq => true # XXX uniq does not seem to work! You get all stages, even doubles
+  has_many :configuration_parameters, :dependent => :destroy, :class_name => "HostConfiguration", :order => 'id ASC'
+
 
   validates_uniqueness_of :name
   validates_presence_of :name
   validates_length_of :name, :maximum => 250
-
+ 
   attr_accessible :name, :alias
 
   before_validation :strip_whitespace, :name_alias_if_empty
+
+  # returns a string with all custom tasks to be loaded by the Capistrano config
+  def tasks
+    #HostConfiguration.templates[template]::TASKS
+  end
 
   def strip_whitespace
     self.name = self.name.strip rescue nil

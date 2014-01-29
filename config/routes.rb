@@ -17,7 +17,9 @@ ActionController::Routing::Routes.draw do |map|
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'
 
-  map.resources :hosts
+  map.resources :hosts, :member => {:dashboard => :get} do |hosts|
+    hosts.resources :host_configurations
+  end
   map.resources :recipes, :collection => {:preview => :get}
   map.resources :projects, :member => {:dashboard => :get} do |projects|
     projects.resources :project_users
