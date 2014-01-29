@@ -152,7 +152,8 @@ module Webistrano
     def set_host_configuration(config)
       #self.hosts.configuration_parameters.dup
       #host_configs = 
-      deployment.stage.hosts.each do |host|
+      #deployment.stage.hosts.each do |host|
+      deployment.deploy_to_hosts.each do |host|
       host_configs = host.configuration_parameters.dup
     
         host_configs.each do |effective_conf|

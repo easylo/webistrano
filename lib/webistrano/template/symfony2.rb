@@ -19,7 +19,8 @@ module Webistrano
         :update_assets_version => true,
         :clear_controllers => true,
         :permission_method => ":acl",
-        :use_set_permissions => true
+        :use_set_permissions => true,
+        :default_environment_PATH => '$PATH'
       }).freeze
 
       DESC = <<-'EOS'
@@ -34,6 +35,12 @@ module Webistrano
       }
 
       capifony_symfony2 = <<-'EOS'
+
+        if defined?("#{default_environment_PATH}") && ("#{default_environment_PATH}" != '$PATH') then
+          set :default_environment, {
+                  'PATH' => "#{default_environment_PATH}"
+          }
+        end
 
         set :local_cache_path, "/var/deploys/#{webistrano_project}/"
         set :local_cache, "#{local_cache_path}/#{webistrano_stage}"
