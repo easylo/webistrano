@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
 	end
 
 	def ldap_authenticated?(password)
+    if password.blank? then
+      return false
+    end
 
 		if ldap_cn.nil? then
       			false
@@ -34,11 +37,12 @@ class User < ActiveRecord::Base
 			ldap_entry = User.retrieve_from_ldap(ldap_cn)
 
 			dn=ldap_entry.dn
-
-			ldap.auth(dn,password)
-
-			ldap.bind
-
+      ldap.auth(dn,password)
+			if ldap.bind then
+			   true
+      else
+        false
+      end
 		end
 	end
 
@@ -113,7 +117,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  attr_accessible :login, :email, :password, :password_confirmation, :time_zone, :tz
+  attr_accessible :login, :email, :password, :password_confirmation, :time_zone, :tz, :dev
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -136,6 +140,7 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
+    
     u = find_by_login_and_disabled(login, nil) # need to get the salt
     u && (u.authenticated?(password) || u.ldap_authenticated?(password)) ? u : nil
   end
@@ -177,6 +182,10 @@ class User < ActiveRecord::Base
     self.remember_token_expires_at = nil
     self.remember_token            = nil
     save(false)
+  end
+
+  def dev?
+    self.dev.to_i == 1
   end
 
   def admin?

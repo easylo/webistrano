@@ -1,7 +1,8 @@
 class StageConfigurationsController < ApplicationController
 
   before_filter :load_stage
-  before_filter :ensure_admin, :only => [:new, :edit, :destroy, :create, :update]
+  #before_filter :ensure_admin, :only => [:new, :edit, :destroy, :create, :update]
+  before_filter :ensure_dev, :only => [:new, :edit, :destroy, :create, :update]
 
   # GET /project/1/stage/1/stage_configurations/1
   # GET /project/1/stage/1/stage_configurations/1.xml

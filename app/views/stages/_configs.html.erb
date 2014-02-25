@@ -16,7 +16,7 @@
       <td title="<%=h config.name %>"><%= truncate(h(config.name), :length => 25) %></td>
       <td title="<%=h config.value %>"><%=h truncate(hide_password_in_value(config), :length => 45) %></td>
       <td><%= config.prompt_status_in_html %></td>
-    <% if current_user.admin? %>
+    <% if current_user.admin?  or current_user.dev? %>
       <td><%= link_to 'Edit', edit_project_stage_stage_configuration_path(@project, @stage, config) %></td>
       <td><%= link_to 'Delete', project_stage_stage_configuration_path(@project, @stage, config), :confirm => 'Are you sure?', :method => :delete %></td>
     <% end %>

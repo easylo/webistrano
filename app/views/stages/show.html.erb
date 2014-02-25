@@ -50,7 +50,7 @@
 
 <div class="clear"></div>
 
-<% if current_user.admin? %>
+<% if current_user.admin? or current_user.dev?  %>
 <br>
 <fieldset class="fieldset">
   <legend>Stage specific configuration</legend>

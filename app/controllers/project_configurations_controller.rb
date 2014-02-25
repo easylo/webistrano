@@ -1,8 +1,9 @@
 class ProjectConfigurationsController < ApplicationController
 
   before_filter :load_project
-  before_filter :ensure_admin, :only => [:new, :edit, :destroy, :create, :update]
-
+  #before_filter :ensure_admin, :only => [:new, :edit, :destroy, :create, :update]
+  before_filter :ensure_dev, :only => [:new, :edit, :destroy, :create, :update]
+  
   # GET /projects/1/project_configurations/1
   # GET /projects/1/project_configurations/1.xml
   def show

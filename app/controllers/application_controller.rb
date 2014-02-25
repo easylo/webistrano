@@ -59,6 +59,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+   def ensure_dev
+    if logged_in? && ( current_user.dev? or current_user.admin? )
+      return true
+    else
+      flash[:notice] = "Action not allowed (not admin or dev)"
+      redirect_to home_path
+      return false
+    end
+  end
+
   def ensure_not_disabled
     if logged_in? && current_user.disabled?
       logout

@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20131017211742) do
     t.string   "time_zone",                               :default => "UTC"
     t.datetime "disabled"
     t.string   "ldap_cn"
+    t.integer  "dev"
   end
 
   add_index "users", ["disabled"], :name => "index_users_on_disabled"
