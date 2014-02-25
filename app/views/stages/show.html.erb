@@ -76,13 +76,15 @@
 </fieldset>
 <% end %>
 
-<% if current_user.admin? %>
+<% if current_user.admin? or current_user.dev?  %>
 <br /><br />
 <fieldset class="fieldset">
   <legend>Deployed hosts</legend>
   <%= render(:partial => 'roles') %>
   <br />
+  <% if current_user.admin? %>
   <%= link_to 'Add host', new_project_stage_role_path(current_project, @stage) , :class => 'arrow_link' %>
+  <% end %>
 </fieldset>
 <% end %>
 
