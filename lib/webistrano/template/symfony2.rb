@@ -20,7 +20,8 @@ module Webistrano
         :clear_controllers => true,
         :permission_method => ":acl",
         :use_set_permissions => true,
-        :default_environment_PATH => '$PATH'
+        :default_environment_PATH => '$PATH',
+        :after_deploy_cleanup_old_releases => true
       }).freeze
 
       DESC = <<-'EOS'
@@ -41,6 +42,8 @@ module Webistrano
                   'PATH' => "#{default_environment_PATH}"
           }
         end
+
+        set :after_deploy_cleanup_old_releases,          true
 
         set :local_cache_path, "/var/deploys/#{webistrano_project}/"
         set :local_cache, "#{local_cache_path}/#{webistrano_stage}"
@@ -274,6 +277,12 @@ module Webistrano
 
         after "deploy:create_symlink" do
           logger.info "--> Successfully deployed!".green
+        end
+
+        after "deploy" do
+          if after_deploy_cleanup_old_releases
+            deploy.cleanup           # Clean up old remeases
+          end
         end
 
       EOS
