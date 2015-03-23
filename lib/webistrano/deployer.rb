@@ -273,6 +273,7 @@ module Webistrano
 
     # sets webistrano_project and webistrano_stage to corrosponding values
     def set_project_and_stage_names(config)
+      config.set(:webistrano_user, deployment.user)
       config.set(:webistrano_project, deployment.stage.project.webistrano_project_name)
       config.set(:webistrano_stage, deployment.stage.webistrano_stage_name)
     end
