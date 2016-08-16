@@ -1,3 +1,8 @@
+if RUBY_VERSION =~ /1.9/ # assuming you're running Ruby ~1.9
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
+
 source "http://rubygems.org"
 
 gem "rails", "=2.3.14"
@@ -8,6 +13,7 @@ gem "rake"
 gem "rdoc"
 gem "syntax"
 gem "capistrano", "~> 2.15.5"
+gem "net-ssh", "~> 2.7.0"
 gem "open4"
 gem "version_fu"
 gem "exception_notification", "2.3.3.0"
