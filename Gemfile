@@ -21,7 +21,7 @@ gem "thin"
 gem 'capistrano_rsync_with_remote_cache'
 gem "colored"
 gem "unicorn"
-gem "net-ldap"
+gem "net-ldap", '~>0.12.1'
 
 group :test do
   gem "mocha", "0.9.8"
