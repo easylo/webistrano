@@ -10,7 +10,7 @@ gem "composite_primary_keys", "~> 2.3.5.1"
 gem "erubis"
 gem "mysql"
 gem "rake"
-gem "rdoc"
+gem "rdoc", '=4.2.2'
 gem "syntax"
 gem "capistrano", "~> 2.15"
 gem "net-ssh", "~>2.7.0"
